@@ -17,14 +17,15 @@ library(readr)
 
 
 # load shapefile
-sydney <- st_read("Data/Spatial data/greater_sydney_shape/sydney.shp")
+sydney <- st_read("Data/greater_sydney_shape/sydney.shp")
 
 # read data in
-load("Data/Sampling data/NSW_birds.RData")
+load("Data/NSW_birds.RData")
 
 
 # select ten 'locations/sites'
-# this is done by just browsing on the eBird website
+# this was done by just browsing on the eBird website
+# and being familiar with these sites
 example_sites <- c("L945869", "L2557723", "L8083126", "L1030678", "L915566", 
                    "L1300136", "L5076722", "L2444301", "L3007885", "L5146094")
 
@@ -51,7 +52,7 @@ ggplot()+
   theme_bw()+
   theme(panel.grid.major = element_line(colour = 'transparent'))
 
-ggsave(filename = "C:/Users/CTC/Desktop/citizen_science_value/Submissions/PLoS Biology/Revision 1/Appendix/inset.png",
+ggsave(filename = "Figures/Step 1/inset.png",
        height=4, width=4, units="in")
 
 ggplot()+
@@ -63,17 +64,16 @@ ggplot()+
   theme(panel.grid.major = element_line(colour = 'transparent'))+
   blank()+
   north(sydney)+
-  scalebar(sydney, dist=4, dist_unit="km", transform=TRUE, model="WGS84")
+  scalebar(sydney, dist=10, dist_unit="km", transform=TRUE, model="WGS84")
 
-ggsave(filename = "C:/Users/CTC/Desktop/citizen_science_value/Submissions/PLoS Biology/Revision 1/Appendix/big_sydney.png",
-       height=7, width=9, units="in")
+ggsave(filename = "Figures/Step 1/big_sydney.png",
+       height=7, width=11, units="in")
 
 
 #########################################################################
 #########################################################################
 # make a big function which returns a summary_df for a set number of sites
 # it relies on a list of sites for which to create a summary df
-# will just copy and paste the code above necessary to do this
 # also add a 'date' portion
 # which will allow the 'results' to be calculated for any particular date
 #########################################################################
@@ -210,7 +210,7 @@ list <- c("L945869", "L2557723", "L8083126", "L1030678", "L915566",
 
 site_summary <- return_summary_data(list)
 
-write_csv(site_summary, "C:/Users/CTC/Desktop/citizen_science_value/Submissions/PLoS Biology/Revision 1/Appendix/site_summary.csv")
+write_csv(site_summary, "site_summary1.csv")
 
 ######################################################################
 ######################################################################
@@ -225,7 +225,7 @@ site_summary <- site_summary %>%
   replace_na(list(neighbor_waiting_time=max(.$neighbor_waiting_time, na.rm=TRUE)+(1*sd(.$neighbor_waiting_time, na.rm=TRUE)))) %>%
   replace_na(list(duration=max(.$duration, na.rm=TRUE)+(1*sd(.$duration, na.rm=TRUE))))
 
-write_csv(site_summary, "C:/Users/CTC/Desktop/citizen_science_value/Submissions/PLoS Biology/Revision 1/Appendix/site_summary2.csv")
+write_csv(site_summary, "site_summary2.csv")
 
 
 # make yes/no a multiplier
@@ -253,7 +253,7 @@ formula_df2 <- formula_df %>%
   mutate(norm.m_w_t_n_n = normalize(.$m_w_t_n_n, method="range", range=c(0,25))) %>%
   mutate(norm.days_since = normalize(.$days_since, method="range", range=c(0,25)))
 
-write_csv(formula_df2, "C:/Users/CTC/Desktop/citizen_science_value/Submissions/PLoS Biology/Revision 1/Appendix/site_summary3.csv")
+write_csv(formula_df2, "site_summary3.csv")
 
 
 # value for each locality_id
@@ -278,11 +278,8 @@ ggplot()+
   theme(panel.grid.major = element_line(colour = 'transparent'))+
   scale_colour_gradient(low = "gray60", high = "gray1")
 
-ggsave(filename = "C:/Users/CTC/Desktop/citizen_science_value/Submissions/PLoS Biology/Revision 1/Appendix/value_map.png",
+ggsave(filename = "Figures/Step 5/value_map.png",
        height=6, width=6, units="in")
-
-
-
 
 
 
