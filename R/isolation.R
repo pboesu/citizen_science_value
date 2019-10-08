@@ -28,7 +28,8 @@ isolation_func <- function(df = ebd_wales, mindate = "2015-01-01", maxdate = "20
   
   isolated <- df %>%
     dplyr::filter(OBSERVATION_DATE >= mindate, OBSERVATION_DATE <= maxdate) %>%
-    count(latlong)
+    count(latlong) %>%
+    distinct()
   
   isolated$isolation <- rescale(isolated$n, to = c(1,0))
   
@@ -49,7 +50,7 @@ iso_prio_2018 <- isolation_func(ebd_wales, mindate = "2018-01-01", maxdate = "20
 iso_prio <- bind_rows(iso_prio_2015, iso_prio_2016, iso_prio_2017, iso_prio_2018) %>%
   dplyr::select(latlong, isolation, LATITUDE, LONGITUDE, year)
 
-save(iso_prio, file = "isolation.RData")
+save(iso_prio, file = "Data/isolation.RData")
 
 tiff("Isolationplot.tiff")
 ggplot(data = iso_prio) +
@@ -57,3 +58,12 @@ ggplot(data = iso_prio) +
   scale_color_viridis(option = "plasma", "Priority") +
   theme_minimal()
 dev.off()
+
+# -----------
+load("Data/samplingeffort.RData")
+
+wales_birds_SACs <- wales_birds_SACs %>%
+  unite("latlong", LATITUDE:LONGITUDE)
+
+AllBirds <- left_join(iso_prio, wales_birds_SACs, by = c("latlong", "year"))
+save(AllBirds, file = "Data/Birds.RData")
