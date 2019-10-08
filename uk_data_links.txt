@@ -3,3 +3,4 @@ https://www.dropbox.com/s/cauwgpaz9jgr23u/ebd_sampling_filtered_GB_2015_2018.txt
 
 #wales species data
 https://www.dropbox.com/s/87bsrtxxerpjsx3/bird_data_wales_2015_2018.csv?dl=0
+https://www.dropbox.com/s/jl1s5tq099oo25c/bird_data_wales_2015_2018.zip?dl=0
