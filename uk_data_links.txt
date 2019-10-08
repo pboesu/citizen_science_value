@@ -1,2 +1,5 @@
 #visit level data
 https://www.dropbox.com/s/cauwgpaz9jgr23u/ebd_sampling_filtered_GB_2015_2018.txt?dl=0
+
+#wales species data
+https://www.dropbox.com/s/87bsrtxxerpjsx3/bird_data_wales_2015_2018.csv?dl=0
