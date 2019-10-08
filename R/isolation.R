@@ -51,6 +51,9 @@ iso_prio <- bind_rows(iso_prio_2015, iso_prio_2016, iso_prio_2017, iso_prio_2018
 
 save(iso_prio, file = "isolation.RData")
 
+tiff("Isolationplot.tiff")
 ggplot(data = iso_prio) +
   geom_point(aes(x = LONGITUDE, y = LATITUDE, colour = isolation)) +
-  scale_color_viridis(option = "plasma")
+  scale_color_viridis(option = "plasma", "Priority") +
+  theme_minimal()
+dev.off()
